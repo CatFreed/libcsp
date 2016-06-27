@@ -40,7 +40,6 @@ int usart_messages_waiting(int handle){
 	return k_uart_rx_queue_len((KUARTNUM) handle);
 }
 
-//TODO: If csp_thread_create gets converted to the direct FreeRTOS call, this definition will need to change
 CSP_DEFINE_TASK(uart_listen) {
 
 	int length;
@@ -66,8 +65,8 @@ CSP_DEFINE_TASK(uart_listen) {
 void usart_init(struct usart_conf * conf){
 
 	csp_thread_handle_t rxThread;
+
 	//Configure port
-	//TODO:  Probably need to cast all of these to the appropriate kubos data type?
 	KUARTConf config = {0};
 	config.dev_path = conf->device;
 	config.baud_rate = conf->baudrate;
@@ -79,11 +78,7 @@ void usart_init(struct usart_conf * conf){
 	//Creates the KUART structure and then initializes at the device level
 	k_uart_init(uart_num, config);
 
-	//Start RX thread?  Do we have threads?
-	//NOTE: Assuming this is running on FreeRTOS
-	//      so csp_thread_create should allocate everything appropriately for me?
-	//      Seems like a fairly large assumption... The Windows and Linux drivers
-	//      both explicitly called their thread functions...
-	//      Copying parameters from the kiss.c example's SERVER/CLIENT threads
+	//NOTE: csp_thread_create is an arch-dependent call, so should end up calling
+	// the FreeRTOS thread function.  Will need to change if incorrect.
 	csp_thread_create(uart_listen, "uartRXThread", 1000, NULL, 0, &rxThread);
 }

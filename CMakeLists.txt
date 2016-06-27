@@ -60,6 +60,7 @@ add_library (csp STATIC
              $<$<OR:$<BOOL:${HMAC}>,$<BOOL:${XTEA}>>:src/crypto/csp_sha1.c>
              $<$<BOOL:${XTEA}>:src/crypto/csp_xtea.c>
              $<$<BOOL:${CAN_SOCKETCAN}>:src/drivers/can/can_socketcan.c>
+             src/drivers/usart/usart_kubosHAL.c
              src/interfaces/csp_if_lo.c
              src/rtable/csp_rtable_${RTABLE}.c
              $<$<BOOL:${RDP}>:src/transport/csp_rdp.c>

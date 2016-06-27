@@ -84,7 +84,7 @@ def configure(ctx):
         ctx.fatal('--with-os must be either \'posix\', \'windows\', \'macosx\' or \'freertos\'')
 
     # Validate USART drivers
-    if not ctx.options.with_driver_usart in (None, 'windows', 'linux'):
+    if not ctx.options.with_driver_usart in (None, 'windows', 'linux', 'kubosHAL'):
         ctx.fatal('--with-driver-usart must be either \'windows\' or \'linux\'')
 
     if not ctx.options.with_loglevel in ('error', 'warn', 'info', 'debug'):
